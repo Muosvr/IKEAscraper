@@ -3,14 +3,16 @@ import scrapy
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
     start_urls = [
-        'http://quotes.toscrape.com/page/1/',
-        'http://quotes.toscrape.com/page/2/',
+        'https://www.ikea.com/us/en/catalog/categories/departments/workspaces/16213/',
     ]
 
     def parse(self, response):
-        for quote in response.css("div.quote"):
+        for product in response.css("a.productLink img"):
             yield {
-                "text": quote.css("span.text::text").extract_first(),
-                "author": quote.css("small.author::text").extract_first(),
-                "tags": quote.css("div.tags a.tag::text").extract()
+                "Product_name": product.css("img::attr(alt)").extract_first(),
+                "img": response.urljoin(product.css("img::attr(src)").extract_first()),
             }
+
+        # next_page = response.css('li.next a')
+        # if next_page is not None:
+        #     yield response.follow(next_page[0], callback=self.parse)
