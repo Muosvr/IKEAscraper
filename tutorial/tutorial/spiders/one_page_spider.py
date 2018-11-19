@@ -1,7 +1,7 @@
 import scrapy
 
-class QuotesSpider(scrapy.Spider):
-    name = "quotes"
+class OnePageSpider(scrapy.Spider):
+    name = "one_page"
     start_urls = [
         'https://www.ikea.com/us/en/catalog/categories/departments/workspaces/16213/',
     ]
